@@ -1,0 +1,122 @@
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600&display=swap');
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+@font-face {
+    font-family: 'Digital Numbers';
+    src: url('./font/Digital\ Numbers\ 400.ttf');
+}
+
+/* background htmldocument */
+html {
+    background-image: linear-gradient(135deg, #FFFFFF, #F1F3F6);
+}
+
+/* Pembungkus Kalkulator */
+.container {
+    display: flex;
+    flex-direction: column;
+    width: 30vw;
+    height: 90vh;
+    background-color: #F1F3F6;
+    margin: 5vh auto;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: -18px -18px 40px 0 #ffffff, 18px 18px 30px 0 #D1D9E6;
+}
+
+/* Display Kalkulator */
+.display-container {
+    width: 100%;
+    height: 25%;
+    display: flex;
+    padding: 10px;
+    background-color: #F1F3F6;
+    border-radius: 15px;
+    box-shadow: 5px 5px 10px 0 #3754aa28, -5px -5px 10px #ffffff;
+}
+
+.display {
+    display: flex;
+    position: relative;
+    width: 100%;
+    height: 100%;
+    padding: 0 8%;
+    border-radius: 15px;
+    border: solid 2px #969C91;
+    align-items: center;
+    justify-content: flex-end;
+    text-align: right;
+    font-family: 'Digital Numbers', sans-serif;
+    font-size: 18px;
+    background-image: linear-gradient(135deg, #CCD5C6, #B2BFA7);
+}
+
+.display .background {
+    display: flex;
+    justify-content: center;
+    opacity: 0.1;
+    text-align: right;
+    position: absolute;
+    width: auto;
+}
+
+.display .top-layer {
+    text-align: right;
+    position: absolute;
+}
+
+/* .display .top-layer::before {
+    content: '0000000000';
+    opacity: 0.2;
+    position: absolute;
+    right: 20px;
+} */
+
+/* style tiap baris */
+.row {
+    display: flex;
+    width: 100%;
+    height: 12%;
+    margin-top: 20px;
+    justify-content: space-between;
+}
+
+/* style tiap button */
+.button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: 80px;
+    background-color: #F1F3F6;
+    box-shadow: 5px 5px 10px 0 #3754aa28, -5px -5px 10px #ffffff;
+    border-radius: 15px;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+.button:active {
+    box-shadow: 5px 5px 10px 0 #3754aa28 inset, -5px -5px 10px #ffffff inset;
+}
+
+/* style utk angka 0 */
+.nol {
+    width: 177px;
+}
+
+/* style utk operator /, +, -, x, =  */
+.operator {
+    background-color: #323531;
+    color: white;
+}
+
+.operator:active {
+    box-shadow: none;
+    background-color: #414540;
+}
+
