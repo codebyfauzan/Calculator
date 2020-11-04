@@ -3,7 +3,8 @@ const calculator = {
     operand1: null,
     operand2: null,
     operator: null,
-    displayNumber: '0'
+    displayNumber: '0',
+    arr: ['0']
 }
 
 // Checking zero number
@@ -11,25 +12,30 @@ function zeroCheck(number) {
 
     if (calculator.displayNumber == '0' && number == '.') {
         calculator.displayNumber += number;
-    } else if (calculator.displayNumber == '0') {
+        calculator.arr = calculator.displayNumber.split("");
+    } else if (calculator.displayNumber == '0' && number !== '') {
         calculator.displayNumber = number;
-    } else {
+        calculator.arr = calculator.displayNumber.split("");
+    } 
+    else if (number === '') {
+        calculator.arr = calculator.displayNumber.split("");
+    } 
+    else {
         calculator.displayNumber += number;
+        calculator.arr = calculator.displayNumber.split("");
     }
 }
 
 
 // Handle input number
-function inputNumber(number) {
+function inputNumber() {
 
     if (calculator.operator == null) {
         calculator.operand1 = calculator.displayNumber;
-        // calculator.arr.push(number);
-        // calculator.arr[++top] += number;
+        calculator.arr = calculator.displayNumber.split("");
     } else {
         calculator.operand2 = calculator.displayNumber;
-        // calculator.arr.push(number);
-        // calculator.arr[++top] += number;
+        calculator.arr = calculator.displayNumber.split("");
     }
     
 }
@@ -37,7 +43,13 @@ function inputNumber(number) {
 // Update input and result
 const display = document.querySelector('.top-layer');
 function updateDisplay() {
-    display.innerHTML = calculator.displayNumber;
+    let trimmedString;
+    if (calculator.displayNumber.length > 10) {
+        trimmedString = calculator.displayNumber.substr(0, 10);
+        display.innerHTML = trimmedString;
+    } else {
+        display.innerHTML = calculator.displayNumber;
+    }
 }
 
 // Clear display board
@@ -46,6 +58,7 @@ function clearCalculator() {
     calculator.operand2 = null;
     calculator.operator = null;
     calculator.displayNumber = '0';
+    calculator.arr = ['0'];
 }
 
 // Handle percent number
@@ -53,35 +66,40 @@ function handlePercent() {
 
     if (calculator.operand1 != null && calculator.operator == null) {
         calculator.operand1 = parseFloat(calculator.operand1) / 100;
-        calculator.displayNumber = calculator.operand1;
+        calculator.displayNumber = calculator.operand1+"";
+        calculator.arr = calculator.displayNumber.split("");
     } else if (calculator.operand2 != null && calculator.operator != null) {
         calculator.operand2 = parseFloat(calculator.operand2) / 100;
-        calculator.displayNumber = calculator.operand2;
+        calculator.displayNumber = calculator.operand2+"";
+        calculator.arr = calculator.displayNumber.split("");
     }
-
+    
 }
 
 function handleDelete() {
 
-    if (calculator.displayNumber != ['0']) {
-        return calculator.displayNumber.pop();
+    if (calculator.displayNumber.length === 1 && calculator.arr.length === 1) {
+        clearCalculator();
+        console.log(calculator.arr);
+    } 
+    else if (calculator.displayNumber == '0' && calculator.arr == ['0']) {
+        calculator.displayNumber = '0';
+        console.log(calculator.arr);
+    } 
+    else if (calculator.displayNumber !== '0') {
+        calculator.arr.pop();
+        calculator.displayNumber = calculator.arr.join('');
+        console.log(calculator.arr);
     }
     
-    // calculator.displayNumber = [];
-    // // let arr = [calculator.displayNumber];
-    // let top =  calculator.displayNumber.length - 1;
-
-    // // calculator.displayNumber = arr[top--];
-    // return calculator.displayNumber[top--];
-    // console.log(calculator.displayNumber);
-    // // alert('halo');
+    
+    
 }
+
 
 // Handle input operator
 function handleOperator(operator) {
-    // if (calculator.operator != null) {
-    //     alert('operator telah ditentukan');
-    // }
+
     if (calculator.operand1 != null && operator != '=') {
         calculator.operator = operator;
         calculator.displayNumber = '';
@@ -89,7 +107,7 @@ function handleOperator(operator) {
 }
 
 // Calculate numbers
-function Calculation() {
+function Calculation(number) {
     if (calculator.operand1 == null || calculator.operand2 == null) {
         alert('anda belum memasukkan angka');
         return;
@@ -98,15 +116,20 @@ function Calculation() {
     let result;
     if (calculator.operator == '+') {
         result = parseFloat(calculator.operand1) + parseFloat(calculator.operand2);
+        console.log(result);
     } else if (calculator.operator == '-') {
         result = parseFloat(calculator.operand1) - parseFloat(calculator.operand2);
+        console.log(result);
     } else if (calculator.operator == 'x') {
         result = parseFloat(calculator.operand1) * parseFloat(calculator.operand2);
+        console.log(result);
     } else {
         result = parseFloat(calculator.operand1) / parseFloat(calculator.operand2);
+        console.log(result);
     }
 
-    calculator.displayNumber = result;
+    calculator.displayNumber = result+"";
+    calculator.arr = calculator.displayNumber.split("");    
     calculator.operand1 = calculator.displayNumber;
 }
 
@@ -118,7 +141,7 @@ container.addEventListener('click', function(e) {
     updateDisplay();
 
     if (e.target.classList.contains('equal')) {
-        Calculation();
+        Calculation(e.target.innerText);
         updateDisplay();
     }
 
@@ -134,7 +157,7 @@ container.addEventListener('click', function(e) {
 
     if (e.target.classList.contains('button')) {
         zeroCheck(e.target.innerText);
-        inputNumber(e.target.innerText);
+        inputNumber();
         updateDisplay();
     }
 
