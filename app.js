@@ -13,11 +13,11 @@ function zeroCheck(number) {
     if (calculator.displayNumber == '0' && number == '.') {
         calculator.displayNumber += number;
         calculator.arr = calculator.displayNumber.split("");
-    } else if (calculator.displayNumber == '0' && number !== '') {
+    } else if (calculator.displayNumber == '0' && number !== 'backspace') {
         calculator.displayNumber = number;
         calculator.arr = calculator.displayNumber.split("");
     } 
-    else if (number === '') {
+    else if (number === 'backspace') {
         calculator.arr = calculator.displayNumber.split("");
     } 
     else {
@@ -89,6 +89,7 @@ function handleDelete() {
     else if (calculator.displayNumber !== '0') {
         calculator.arr.pop();
         calculator.displayNumber = calculator.arr.join('');
+        calculator.operand1 = calculator.displayNumber;
         console.log(calculator.arr);
     }
     
